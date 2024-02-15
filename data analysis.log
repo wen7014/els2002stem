@@ -1,0 +1,123 @@
+359  dm 'log;clear;output;clear';
+360  options nodate nocenter pageno=1 ls=111 ps=53;
+361  options FORMCHAR="|----|+|---+=|-/\<>*";
+362  ods csv file='C:\Users\wendy\OneDrive - Louisiana State University\2021\STEM project\dataset1.csv';
+NOTE: Writing CSV Body file: C:\Users\wendy\OneDrive - Louisiana State University\2021\STEM
+      project\dataset1.csv
+363
+364  data mywork;
+365  infile "G:/2021/AERA2022/math&tech_aera (1).csv" delimiter="," missover dsd firstobs=2;
+WARNING: Apparent symbolic reference TECH_AERA not resolved.
+WARNING: Apparent symbolic reference TECH_AERA not resolved.
+366
+367  input STU_ID$   STRAT_ID$   F1MATHSE    F1TXMBIR    F1TXM1IR    F2PS0601$   F3TZCMTHGPA
+368  F1A07B  F1A07E  F1S16A  F1S16B  F1S16C  F1S16D  F1S16E  F1S16F  F1S16G  F1S16H  F1S16I  F1S17A
+369  F1S17B  F1S17C  F1S17D  F1S17E  F1S17F  F1S17G  F1S17H  F1S17I  F1S17J  F1S40N$ F2B17A$  F2B17B$ F1SES1
+369! F1RACE$ F1SEX$
+370  F1MOTHED$   F1FATHED$   outcome$    F2F1WT  F3F1PNLPSWT
+371
+372  ;
+373
+374  label
+375   F1S16A='Years of General Science coursework'
+376   F1S16B='Years of General Physical Science coursework'
+377   F1S16C='Years of Biology coursework'
+378   F1S16D='Years of Botany/Zoology coursework'
+379   F1S16E='Years of Earth Science coursework'
+380   F1S16F='Years of Chemistry coursework'
+381   F1S16G='Years of Principles of Technology coursework'
+382   F1S16H='Years of Physics coursework'
+383   F1S17A='Years of General Math coursework'
+384   F1S17B='Years of Pre-Algebra coursework'
+385   F1S17C='Years of AlgebraI coursework'
+386   F1S17D='Years of Geometry coursework'
+387   F1S17E='Years of AlgebraII coursework'
+388   F1S17F='Years of Trigonometry coursework'
+389   F1S17G='Years of Pre-Calculus coursework'
+390   F1S17H='Years of Calculus coursework'
+391   F1S17I='Years of Consumer/Business Math coursework';
+392
+
+NOTE: The infile "G:/2021/AERA2022/math&tech_aera (1).csv" is:
+      Filename=G:\2021\AERA2022\math&tech_aera (1).csv,
+      RECFM=V,LRECL=32767,File Size (bytes)=780450,
+      Last Modified=22Mar2022:13:37:46,
+      Create Time=22Mar2022:12:18:16
+
+NOTE: 6975 records were read from the infile "G:/2021/AERA2022/math&tech_aera (1).csv".
+      The minimum record length was 82.
+      The maximum record length was 118.
+NOTE: The data set WORK.MYWORK has 6975 observations and 39 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.07 seconds
+
+
+393  proc factor data=mywork priors=smc msa n=2 r=p score reorder   outstat=fact;
+394  title"factor analysis years of courseswork";
+395  var  F1S16A F1S16B  F1S16C F1S16D   F1S16E F1S16F  F1S16G  F1S16H  F1S17A F1S17B    F1S17C  F1S17D  F1S17E
+395!   F1S17F  F1S17G  F1S17H F1S17I;
+396  weight F2F1WT;
+397  run;
+
+WARNING: 534 of 6975 observations in data set WORK.MYWORK omitted due to nonpositive weight or truncated
+         frequency.
+NOTE: 2 factors will be retained by the NFACTOR criterion.
+NOTE: The data set WORK.FACT has 46 observations and 19 variables.
+NOTE: PROCEDURE FACTOR used (Total process time):
+      real time           0.14 seconds
+      cpu time            0.14 seconds
+
+
+398  proc score data=mywork score=fact out=scores;
+399  run;
+
+NOTE: No VAR statement is given.  All numeric variables in the SCORE= data set will be used to compute the
+      scores.
+NOTE: There were 6975 observations read from the data set WORK.MYWORK.
+NOTE: There were 46 observations read from the data set WORK.FACT.
+NOTE: The data set WORK.SCORES has 6975 observations and 41 variables.
+NOTE: PROCEDURE SCORE used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+
+
+400
+401  /*proc print data=scores;
+402  run;*/
+403
+404  ods graphics on;
+405  proc psmatch data=scores;
+ERROR: Procedure PSMATCH not found.
+406  class F1RACE F1SEX F1MOTHED  F1FATHED;
+407  psmodel outcome(Treated='1') = F1SES1 F1RACE F1SEX F1MOTHED  F1FATHED;
+408  match method=varratio(kmin=1 kmax=1) distance=lps caliper=0.5;
+409  assess lps var=(F1SES1) /plots=(CDFPlot BoxPlot StdDiff);
+410  output out(obs=all)= Matched1 weight=F2F1WT matchid=STU_ID;
+411  run;
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE PSMATCH used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+
+412
+413  /*proc glimmix data=scores method=Laplace noclprint;
+414  /*plots=residualpanel(conditional marginal);*/
+415
+416  /*class STU_ID STRAT_ID BYSEX1 BYRACE1 YEARGRADMATH YEARGRADSCI OUTCOME MATHREADY SCIREADY MOTHERED
+416! FATHERED    INCOME;
+417
+418  model OUTCOME(EVENT=LAST)=  factor1 factor2  BYSEX1 BYRACE1  BYSES2 F1MATHSE F1TXM1IR MATHREADY SCIREADY
+418! YEARGRADMATH   YEARGRADSCI MOTHERED    FATHERED    INCOME
+419  /CL DIST=BINARY LINK=LOGIT SOLUTION chisq ODDSRATIO(DIFF=LAST LABEL);
+420  RANDOM INTERCEPT / SUBJECT=STRAT_ID s cl type=vc;
+421  weight F3F1PNLPSWT;
+422  by BYSEX1;
+423  output out=wen pred=xbeta pred(ilink)=predprob pred(ilink noblup)=fix_predprob;
+424  title"All included courses only logistics regression weighted ";
+425  run;
+426  ods graphics off;
+427  ods csv close;*/
+
+

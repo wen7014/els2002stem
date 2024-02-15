@@ -1,0 +1,282 @@
+library(readr)
+newdata1 <- read_csv("newdata1.csv")
+View(newdata1)
+sapply(newdata1, function(x) sum(is.na(x)))
+load("C:/Users/wendy/OneDrive - Louisiana State University/2021/STEM project/.Rhistory")
+load("C:/Users/wendy/OneDrive - Louisiana State University/2021/STEM project/data analysis.RData")
+table_three<-tableby(make.names(outcome) ~ F1S16F	+F1S17E+	F1S17G+	F1S17D+	F1S16H+	F1S17F+	F1S16C+	F1S17H+	F1S16A
++F1S17A	+F1S17B	+F1S17C	+F1S16D+	F1S16G+	F1S16B+	F1S17I+	F1S16E, subset=F1SEX=='1',data = m.data1)
+
+library(arsenal)
+table_three<-tableby(make.names(outcome) ~ F1S16F	+F1S17E+	F1S17G+	F1S17D+	F1S16H+	F1S17F+	F1S16C+	F1S17H+	F1S16A
++F1S17A	+F1S17B	+F1S17C	+F1S16D+	F1S16G+	F1S16B+	F1S17I+	F1S16E, subset=F1SEX=='1',data = m.data1)
+result_table_three<-summary(table_three, title = "Descriptive Statistics coursework by gender1:1",pfootnote=TRUE)
+result_table_three
+result_table_three<-summary(table_three, title = "Descriptive Statistics coursework by gender=male",pfootnote=TRUE)
+table_threeF<-tableby(make.names(outcome) ~ F1S16F	+F1S17E+	F1S17G+	F1S17D+	F1S16H+	F1S17F+	F1S16C+	F1S17H+	F1S16A
++F1S17A	+F1S17B	+F1S17C	+F1S16D+	F1S16G+	F1S16B+	F1S17I+	F1S16E, subset=F1SEX=='2',data = m.data1)
+result_table_threeF<-summary(table_threeF, title = "Descriptive Statistics coursework by gender=female",pfootnote=TRUE)
+result_table_three<-as.data.frame(result_table_three)
+result_table_threeF<-as.data.frame(result_table_threeF)
+
+library(writexl)
+write_xlsx(result_table_three, "C:/Users/wendy/OneDrive - Louisiana State University/2021/STEM project/descriptive coursework by male.xlsx")
+write_xlsx(result_table_threeF, "C:/Users/wendy/OneDrive - Louisiana State University/2021/STEM project/descriptive coursework by female.xlsx")
+library(readr)
+newdata <- read_csv("newdata.csv")
+View(newdata)
+sapply(dataset1_1_, function(x) sum(is.na(x)))
+sapply(newdata, function(x) sum(is.na(x)))
+
+newdata <- newdata %>%
+mutate(
+outcome = as.factor(outcome),
+F1SEX=as.factor(F1SEX),
+F1RACE=as.factor(F1RACE),
+F1MOTHED=as.factor(F1MOTHED),
+F1FATHED=as.factor(F1FATHED),
+F1A07B=as.factor(F1A07B),
+F1A07E=as.factor(F1A07E),
+F1S40N=as.factor(F1S40N),
+F2B17A=as.factor(F2B17A),
+F2B17B=as.factor(F2B17B),
+F2PS0601=as.factor(F2PS0601),
+F3TZCMTHGPA=as.numeric(F3TZCMTHGPA),
+F1MOTHED=as.factor(F1MOTHED),
+F1FATHED=as.factor(F1FATHED),
+F1SES1=as.numeric(F1SES1),
+F1MATHSE=as.numeric(F1MATHSE),
+F1TXMBIR=as.numeric(F1TXMBIR),
+F1TXM1IR=as.numeric(F1TXM1IR),
+F1S16A=as.factor(F1S16A),
+F1S16B=as.factor(F1S16B),
+F1S16C=as.factor(F1S16C),
+F1S16D=as.factor(F1S16D),
+F1S16E=as.factor(F1S16E),
+F1S16F=as.factor(F1S16F),
+F1S16G=as.factor(F1S16G),
+F1S16H=as.factor(F1S16H),
+F1S16I=as.factor(F1S16I),
+F1S17A=as.factor(F1S17A),
+F1S17B=as.factor(F1S17B),
+F1S17C=as.factor(F1S17C),
+F1S17D=as.factor(F1S17D),
+F1S17E=as.factor(F1S17E),
+F1S17F=as.factor(F1S17F),
+F1S17G=as.factor(F1S17G),
+F1S17H=as.factor(F1S17H),
+F1S17I=as.factor(F1S17I),
+F1S17J=as.factor(F1S17J)
+)
+
+
+library(dplyr)
+dataset1_1_ <- dataset1_1_ %>%
+mutate(
+outcome = as.factor(outcome),
+F1SEX=as.factor(F1SEX),
+F1RACE=as.factor(F1RACE),
+F1MOTHED=as.factor(F1MOTHED),
+F1FATHED=as.factor(F1FATHED),
+F1A07B=as.factor(F1A07B),
+F1A07E=as.factor(F1A07E),
+F1S40N=as.factor(F1S40N),
+F2B17A=as.factor(F2B17A),
+F2B17B=as.factor(F2B17B),
+F2PS0601=as.factor(F2PS0601),
+F3TZCMTHGPA=as.numeric(F3TZCMTHGPA),
+F1MOTHED=as.factor(F1MOTHED),
+F1FATHED=as.factor(F1FATHED),
+F1SES1=as.numeric(F1SES1),
+F1MATHSE=as.numeric(F1MATHSE),
+F1TXMBIR=as.numeric(F1TXMBIR),
+F1TXM1IR=as.numeric(F1TXM1IR),
+F1S16A=as.factor(F1S16A),
+F1S16B=as.factor(F1S16B),
+F1S16C=as.factor(F1S16C),
+F1S16D=as.factor(F1S16D),
+F1S16E=as.factor(F1S16E),
+F1S16F=as.factor(F1S16F),
+F1S16G=as.factor(F1S16G),
+F1S16H=as.factor(F1S16H),
+F1S16I=as.factor(F1S16I),
+F1S17A=as.factor(F1S17A),
+F1S17B=as.factor(F1S17B),
+F1S17C=as.factor(F1S17C),
+F1S17D=as.factor(F1S17D),
+F1S17E=as.factor(F1S17E),
+F1S17F=as.factor(F1S17F),
+F1S17G=as.factor(F1S17G),
+F1S17H=as.factor(F1S17H),
+F1S17I=as.factor(F1S17I),
+F1S17J=as.factor(F1S17J)
+)
+
+
+library(mice)
+##### show the missing data pattern
+md.pattern(dataset1_1_)
+
+init = mice(dataset1_1_, maxit=0) 
+meth = init$method
+predM = init$predictorMatrix
+
+predM[, c("outcome")]=1
+
+#specify the methods for imputing the missing values. 
+#There are specific methods for continues, binary and ordinal variables. 
+
+
+meth[c("F1MATHSE")]="pmm"
+meth[c("F1TXMBIR")]="pmm"
+meth[c("F1TXM1IR")]="pmm"
+meth[c("F3TZCMTHGPA")]="pmm"
+meth[c("F1SES1")]="pmm"
+
+meth[c("F2B17A")]="polr"
+meth[c("F2B17B")]="polr"
+meth[c("F1S40N")]="polr"
+
+
+
+
+#run the multiple (m=5) imputation
+set.seed(1031)
+imputed_set = mice(dataset1_1_, method=meth, maxit=0, m=5,seed=500)
+imputed1<-complete(imputed_set)
+sapply(imputed1, function(x) sum(is.na(x)))
+
+
+
+library(writexl)
+write_xlsx(imputed, "C:/Users/wendy/OneDrive - Louisiana State University/2021/STEM project/newdata2.xlsx")
+
+
+### Descriptive Statistics
+library(arsenal) 
+table_one <- tableby(make.names(outcome) ~ Factor1+Factor2+F1SEX+F1RACE+F1MOTHED+F1FATHED+F1SES1+F1S40N+F1MATHSE+F1TXMBIR+F1TXM1IR+F3TZCMTHGPA+F2B17A+F2B17B, weights= F3F1PNLPSWT, data = imputed)
+
+table_two<-tableby(make.names(outcome) ~ F1S16F	+F1S17E+	F1S17G+	F1S17D+	F1S16H+	F1S17F+	F1S16C+	F1S17H+	F1S16A
+                   +F1S17A	+F1S17B	+F1S17C	+F1S16D+	F1S16G+	F1S16B+	F1S17I+	F1S16E, data = dataset1_1_)
+
+table_three<-tableby(make.names(outcome) ~ F1S16F	+F1S17E+	F1S17G+	F1S17D+	F1S16H+	F1S17F+	F1S16C+	F1S17H+	F1S16A
+                   +F1S17A	+F1S17B	+F1S17C	+F1S16D+	F1S16G+	F1S16B+	F1S17I+	F1S16E, subset=F1SEX=='1',data = m.data1)
+table_threeF<-tableby(make.names(outcome) ~ F1S16F	+F1S17E+	F1S17G+	F1S17D+	F1S16H+	F1S17F+	F1S16C+	F1S17H+	F1S16A
+                     +F1S17A	+F1S17B	+F1S17C	+F1S16D+	F1S16G+	F1S16B+	F1S17I+	F1S16E, subset=F1SEX=='2',data = m.data1)
+
+table_four<-tableby(make.names(F1RACE) ~ F1S16F	+F1S17E+	F1S17G+	F1S17D+	F1S16H+	F1S17F+	F1S16C+	F1S17H+	F1S16A
+                     +F1S17A	+F1S17B	+F1S17C	+F1S16D+	F1S16G+	F1S16B+	F1S17I+	F1S16E, data = m.data1)
+
+
+result_table_one<-summary(table_one, title = "Descriptive Statistics")
+
+result_table_two<-summary(table_two, title = "Descriptive Statistics coursework by STEM",pfootnote=TRUE)
+
+result_table_three<-summary(table_three, title = "Descriptive Statistics coursework by gender=male",pfootnote=TRUE)
+
+result_table_threeF<-summary(table_threeF, title = "Descriptive Statistics coursework by gender=female",pfootnote=TRUE)
+result_table_four<-summary(table_four, title = "Descriptive Statistics coursework by race",pfootnote=TRUE)
+
+library(writexl)
+
+result_table_one<-as.data.frame(result_table_one)
+result_table_two<-as.data.frame(result_table_two)
+result_table_three<-as.data.frame(result_table_three)
+result_table_four<-as.data.frame(result_table_four)
+result_table_threeF<-as.data.frame(result_table_threeF)
+
+
+## scatterplot
+
+library(car)
+
+stemgroup<-imputed1[which(imputed1$outcome=='1'),]
+nonstemgroup<-imputed1[which(imputed1$outcome=='0'),]
+maledata <- imputed1[which(imputed1$F1SEX=='1'),]
+femaledata <- imputed1[which(imputed1$F1SEX=='2'),] 
+
+scatterplot(Factor1 ~ Factor2|outcome, data=imputed1,
+   xlab="Basic Math&Science", ylab="Middle or Advanced Math&Science",
+   main="Scatter Plot")
+
+scatterplot(Factor1 ~ Factor2|outcome, data=maledata,
+   xlab="Basic Math&Science", ylab="Middle or Advanced Math&Science",
+   main="Scatter Plot for Male Students")
+
+scatterplot(Factor1 ~ Factor2|outcome, data=femaledata,
+   xlab="Basic Math&Science", ylab="Middle or Advanced Math&Science",
+   main="Scatter Plot for Female Students")
+
+
+
+NativeAdata <- imputed1[which(imputed1$F1RACE=='1'),]
+
+scatterplot(Factor1 ~ Factor2|outcome, data=NativeAdata,
+   xlab="Basic Math&Science", ylab="Middle or Advanced Math&Science",
+   main="Scatter Plot for American Indian/Alaska Native Students")
+   
+Asiandata<-imputed1[which(imputed1$F1RACE=='2'),]
+scatterplot(Factor1 ~ Factor2|outcome, data=Asiandata,
+   xlab="Basic Math&Science", ylab="Middle or Advanced Math&Science",
+   main="Scatter Plot for Asian, Hawaii/Pacific Islander Students")
+
+Blackdata<-imputed1[which(imputed1$F1RACE=='3'),]
+scatterplot(Factor1 ~ Factor2|outcome, data=Blackdata,
+   xlab="Basic Math&Science", ylab="Middle or Advanced Math&Science",
+   main="Scatter Plot for African American Students")
+   
+Hisdata<-imputed1[which(imputed1$F1RACE=='5'),]
+scatterplot(Factor1 ~ Factor2|outcome, data=Hisdata,
+   xlab="Basic Math&Science", ylab="Middle or Advanced Math&Science",
+   main="Scatter Plot for Hispanic Students")
+   
+Muldata<-imputed1[which(imputed1$F1RACE=='6'),]
+scatterplot(Factor1 ~ Factor2|outcome, data=Muldata,
+   xlab="Basic Math&Science", ylab="Middle or Advanced Math&Science",
+   main="Scatter Plot for Multiraces Students")
+   
+Wdata<-imputed1[which(imputed1$F1RACE=='7'),]
+scatterplot(Factor1 ~ Factor2|outcome, data=Wdata,
+   xlab="Basic Math&Science", ylab="Middle or Advanced Math&Science",
+   main="Scatter Plot for White Students")
+
+#####build logistic models
+
+library(caret)
+library(aod)
+mylogitW <- glm(outcome ~ Factor1+Factor2+F1SEX+F1MOTHED+F1FATHED +F1SES1+F1S40N+F1MATHSE	+F1TXMBIR+	F1TXM1IR+	F3TZCMTHGPA  +  F2B17A + F2B17B, data = Wdata, weights= F2F1WT, family = "binomial")
+
+library(OddsPlotty)
+library(ggthemes)
+par(mfrow=c(1,2))
+plotty1<- OddsPlotty::odds_plot(mylogit1, 
+                      title = "Odds Plot",
+                      subtitle = "Showing odds of obtainning STEM degrees based on various factors for Male Students",
+                      point_col = "#00f2ff",
+                      error_bar_colour = "black",
+                      point_size = 3,
+                      error_bar_width = .8,
+                      h_line_color = "red")
+library(epiDisplay)                     
+                      
+displaylogit<-logistic.display(mylogit)
+displaylogit1<-logistic.display(mylogit1)
+displaylogit2<-logistic.display(mylogit2)
+displaylogitA<-logistic.display(mylogitA)
+displaylogitB<-logistic.display(mylogitB)
+displaylogitH<-logistic.display(mylogitH)
+displaylogitW<-logistic.display(mylogitW)
+
+slogit<-summary(mylogit)
+slogit1<-summary(mylogit1)
+slogit2<-summary(mylogit2)
+slogitA<-summary(mylogitA)
+slogitB<-summary(mylogitB)
+slogitH<-summary(mylogitH)
+slogitW<-summary(mylogitW)
+
+
+library(writexl)
+slogit<-as.data.frame(slogit)
+write.csv(slogitW$coefficients, "C:/Users/wendy/OneDrive - Louisiana State University/2021/STEM project/result/table5d.csv")
+
